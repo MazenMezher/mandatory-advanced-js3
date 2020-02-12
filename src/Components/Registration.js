@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from "axios"
 import { Redirect } from "react-router-dom"
+import { Helmet } from "react-helmet"
+import { Link } from "react-router-dom";
 
 class Registration extends Component {
 
@@ -30,6 +32,19 @@ class Registration extends Component {
         let { email, password } = this.state;
         const api = "http://3.120.96.16:3002";
 
+
+        let emailValidator = /^([A-Z\d.-]+)@([A-Z\d-]+).([A-Z]{2,8})(.[A-Z]{2,8})?$/i.test(email);
+        let passValidator = /^[A-Za-z]?\w{2,16}?$/i.test(password);
+
+        if(!emailValidator){
+            return null
+        }
+        else if (!passValidator){
+            return null
+        }
+        else {
+
+        
         let data = {
             email: email,
             password: password,
@@ -44,11 +59,12 @@ class Registration extends Component {
             this.setState({alrdyExists: true});
 
             if(this.state.alrdyExists){
-                this.setState({ errorMessage: "Invalid email"})
+                this.setState({ errorMessage: "Email is in use! Choose another"})
             } else {
                 this.setState({ errorMessage: ""})
             }
         })
+    }
     }
 
     render() {
@@ -63,6 +79,7 @@ class Registration extends Component {
         }
         return (
             <div>
+                  <Helmet><title>Register-Page</title></Helmet>
                 <form onSubmit={event => event.preventDefault()}>
                     <label>
                         Email 
@@ -75,6 +92,7 @@ class Registration extends Component {
                     </label>
                     <button onClick={this.createAccount}>Register</button>
                     <p> {errorMessage} </p>
+                    <Link to="/">Return to main page</Link>
                 </form>
             </div>
         )

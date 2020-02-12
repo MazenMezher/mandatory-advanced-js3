@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import axios from "axios"
-import { token$ } from "./TokenStore";
-import Todo from "../Components/Todo"
+import { token$, updateToken } from "./TokenStore";
+import { Redirect } from 'react-router-dom';
+import { Helmet } from "react-helmet"
+import Links from './Links'
+
 
 class AddTodo extends Component {
     constructor(props) {
@@ -12,8 +15,9 @@ class AddTodo extends Component {
             clearField: "",
             errAddTodoMsg: false,
 
+            signOut: false,
             todoList: [],
-            token: token$.value,
+            
 
 
         }
@@ -37,7 +41,6 @@ class AddTodo extends Component {
         else {
 
         this.subscription = token$.subscribe(token => {
-            console.log(token);
 
             let item = {
                 content: content
@@ -60,7 +63,7 @@ class AddTodo extends Component {
                 this.setState({ todoList: newTodo });
             })
             .catch(err => {
-                console.log(err);
+                
                 this.setState({ errAddTodo: true });
 
                 if (this.state.errAddTodo) {
@@ -102,10 +105,25 @@ class AddTodo extends Component {
     })
     }
 
+    logOut = () => {
+        localStorage.removeItem("token");
+
+        this.setState({signOut: true})
+        updateToken(null);
+
+    }
+    
 
     render() {
-        const { content, todoList } = this.state;
+        const { content, todoList, signOut } = this.state;
 
+        if(signOut){
+            return (
+                <Redirect to="/" />
+            )
+        }
+
+        
         let addTodos = todoList.map(todo => {
             return (
                 <div key={todo.id}>
@@ -118,11 +136,16 @@ class AddTodo extends Component {
         return (
             
             <div>
+                <Helmet><title>Todo-Page</title></Helmet>
+                <Links />
                 <form onSubmit={this.clearInput}>
                     <label>
                         Todos <input type="text" value={content} onChange={this.onNewItem} placeholder="Add todos"/>
+                        
                     </label>
                     <button onClick={this.addTodo}>Add a todo</button>
+                    <button onClick={this.logOut}>Log Out</button>
+                    
                 </form>
                 {this.props.renderTodo}
                 {addTodos}
