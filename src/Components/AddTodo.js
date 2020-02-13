@@ -3,7 +3,7 @@ import axios from "axios"
 import { token$, updateToken } from "./TokenStore";
 import { Redirect } from 'react-router-dom';
 import { Helmet } from "react-helmet"
-import Links from './Links'
+import { Link } from "react-router-dom";
 
 
 class AddTodo extends Component {
@@ -113,9 +113,10 @@ class AddTodo extends Component {
 
     }
     
+    
 
     render() {
-        const { content, todoList, signOut } = this.state;
+        const { content, todoList, signOut} = this.state;
 
         if(signOut){
             return (
@@ -123,9 +124,9 @@ class AddTodo extends Component {
             )
         }
 
-        
         let addTodos = todoList.map(todo => {
             return (
+                
                 <div key={todo.id}>
                     <p> {todo.content}</p>
                     <button onClick={() => this.deleteTodo(todo.id)}>Delete</button>
@@ -137,7 +138,8 @@ class AddTodo extends Component {
             
             <div>
                 <Helmet><title>Todo-Page</title></Helmet>
-                <Links />
+                <label>Not a member yet?</label><Link to="/registration" onClick={this.logOut}><p>Register here</p> </Link>
+                <Link to="/" onClick={this.logOut}><p>Return to main page</p></Link>
                 <form onSubmit={this.clearInput}>
                     <label>
                         Todos <input type="text" value={content} onChange={this.onNewItem} placeholder="Add todos"/>

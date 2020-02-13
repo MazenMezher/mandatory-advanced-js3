@@ -10,8 +10,10 @@ class ActiveUser extends Component {
     
         this.state = {
             email: null,
+            toReg: false,
         }
     }
+
     componentDidMount() {
         this.subscription = token$.subscribe(token => {
             const decoded = jwt.decode(token);
@@ -25,7 +27,8 @@ class ActiveUser extends Component {
         })
     }
     render() {
-        const { email } = this.state;
+        const { email, toReg } = this.state;
+
 
         return (
             <>

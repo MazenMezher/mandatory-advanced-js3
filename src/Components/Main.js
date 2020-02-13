@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Links from './Links'
 import axios from "axios"
 import { Redirect } from "react-router-dom"
 import { updateToken } from "./TokenStore";
@@ -79,11 +78,14 @@ class Main extends Component {
             })
         }
         }
+        
+        
 
     render() {
 
         const { email, password, loggedIn} = this.state;
 
+        
 
         if(loggedIn){
             return (
@@ -108,7 +110,7 @@ class Main extends Component {
                     <button onClick={this.loginAuth}>Login</button>
                     <p>{this.state.errorMsg}</p>
                 </form>
-                <Link to=".registartion"><p>Register here</p></Link>
+                <label>Not a member yet? <Link to="/registration"><p>Register here</p></Link> </label>
             </div>
         )
     }
