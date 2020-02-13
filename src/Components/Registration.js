@@ -44,7 +44,6 @@ class Registration extends Component {
         }
         else {
 
-        
         let data = {
             email: email,
             password: password,
@@ -52,7 +51,6 @@ class Registration extends Component {
 
         axios.post(`${api}/register`,data)
         .then(res => {
-            console.log(res)
             this.setState({register: true})
         })
         .catch(err => {
@@ -69,8 +67,6 @@ class Registration extends Component {
 
     render() {
         const { email, password, register, errorMessage } = this.state;
-
-        
 
         if(register){
             return (

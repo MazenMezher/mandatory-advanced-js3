@@ -53,13 +53,10 @@ class Todo extends Component {
             },
         })
         .then(res => {
-            console.log(res)
             let todos = res.data.todos;
             this.setState({todoList: todos})
-            console.log(todos)
         })
         .catch(err => {
-            console.log(err);
             this.setState({error: true})
             updateToken(null);
         })
@@ -116,9 +113,9 @@ class Todo extends Component {
 
         let renderTodos = todoList.map(todos => {
             return (
-                <div key={todos.id}>
-                    <p key={todos.id}>{todos.content} </p>
-                    <button onClick={() => this.deleteTodo(todos.id)}>Delete</button>
+                <div key={todos.id} >
+                        <p key={todos.id} className="todoContainer">{todos.content}
+                        <button onClick={() => this.deleteTodo(todos.id)} className="glow-on-hover">Delete</button></p>
                 </div>
                 
             )
@@ -126,7 +123,7 @@ class Todo extends Component {
 
         return (
             <div>
-                <h1>My Todos</h1>
+                <h1 className="myTodos">My Todos</h1>
                 <AddTodo renderTodo={renderTodos} />
             </div>
         )

@@ -13,11 +13,10 @@ class Main extends Component {
             this.state = {
                 email: "",
                 password: "",
-                loggedIn: false,
-
-                error: false,
                 errorMsg: "",
 
+                loggedIn: false,
+                error: false,
                 tokenValid: false,
             }
         }
@@ -35,8 +34,6 @@ class Main extends Component {
             let { email, password} = this.state;
 
             const api = "http://3.120.96.16:3002";
-
-            
 
             let emailValidator = /^([A-Z\d.-]+)@([A-Z\d-]+).([A-Z]{2,8})(.[A-Z]{2,8})?$/i.test(email);
             let passValidator = /^[A-Za-z]?\w{2,16}?$/i.test(password);
@@ -61,18 +58,14 @@ class Main extends Component {
                 updateToken(profile)
             })
             .catch(err => {
-                console.log(err)
                 this.setState({ error: true})
                 
-
                 if(this.state.error) {
-                        this.setState({
-                            errorMsg: "Invalid Login!"
-                        })
-                
+                    this.setState({
+                        errorMsg: "Invalid Login!"
+                    })
                 } else {
-                        this.setState({errorMsg: ""})
-                    
+                    this.setState({errorMsg: ""})
                 }
                 updateToken(null)
             })
@@ -85,8 +78,6 @@ class Main extends Component {
 
         const { email, password, loggedIn} = this.state;
 
-        
-
         if(loggedIn){
             return (
                 <Redirect to="/todo" />
@@ -96,21 +87,24 @@ class Main extends Component {
 
             <div>
                 <Helmet><title>Login-Page</title></Helmet>
-
-                <form onSubmit={event => event.preventDefault()}>
+                
+                <form onSubmit={event => event.preventDefault()} className="logInForm">
+                <header className="header"><h1>Todo-App</h1></header>
                     <label>
-                        Email 
+                        Username 
                         <input type="email" placeholder="Example@hotmail.com" value={email} onChange={this.onEmailChange}/>
                     </label>
-
+                        <br/>
                     <label>
                         Password
                         <input type="password" placeholder="Password" value={password} onChange={this.onPasswordChange}/>
                     </label>
+                        <br/>
                     <button onClick={this.loginAuth}>Login</button>
                     <p>{this.state.errorMsg}</p>
+                    <label>Not a member yet? <Link to="/registration"><p>Register here</p></Link> </label>
                 </form>
-                <label>Not a member yet? <Link to="/registration"><p>Register here</p></Link> </label>
+                
             </div>
         )
     }

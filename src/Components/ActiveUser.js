@@ -32,7 +32,7 @@ class ActiveUser extends Component {
 
         return (
             <>
-                <Link to="/todo"> 
+                <Link to="/todo" className="activeUser"> 
                     <p>{email}</p>
                 </Link>
             </>

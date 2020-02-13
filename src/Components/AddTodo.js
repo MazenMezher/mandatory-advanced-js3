@@ -11,15 +11,12 @@ class AddTodo extends Component {
         super(props)
     
         this.state = {
-            content: '',
-            clearField: "",
-            errAddTodoMsg: false,
-
-            signOut: false,
             todoList: [],
-            
+            content: "",
+            clearField: "",
 
-
+            errAddTodoMsg: false,
+            signOut: false,
         }
     }
 
@@ -127,22 +124,26 @@ class AddTodo extends Component {
         let addTodos = todoList.map(todo => {
             return (
                 
-                <div key={todo.id}>
-                    <p> {todo.content}</p>
-                    <button onClick={() => this.deleteTodo(todo.id)}>Delete</button>
+                <div key={todo.id} >
+                    <p className="todoContainer"> {todo.content}
+                    <button onClick={() => this.deleteTodo(todo.id)} className="glow-on-hover">Delete</button>
+                    </p>
                 </div>
             )
         })
 
         return (
             
-            <div>
+            <div className="todoBox">
                 <Helmet><title>Todo-Page</title></Helmet>
-                <label>Not a member yet?</label><Link to="/registration" onClick={this.logOut}><p>Register here</p> </Link>
+                
+                <div className="extra">
+                <Link to="/registration" className="newMember" onClick={this.logOut}><p>Register new member</p> </Link>
                 <Link to="/" onClick={this.logOut}><p>Return to main page</p></Link>
+                </div>
                 <form onSubmit={this.clearInput}>
                     <label>
-                        Todos <input type="text" value={content} onChange={this.onNewItem} placeholder="Add todos"/>
+                        Create your todo:  <input type="text" value={content} onChange={this.onNewItem} placeholder="Add todos"/>
                         
                     </label>
                     <button onClick={this.addTodo}>Add a todo</button>
