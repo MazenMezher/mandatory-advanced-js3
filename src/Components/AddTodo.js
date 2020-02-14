@@ -42,7 +42,7 @@ class AddTodo extends Component {
             let item = {
                 content: content
             }
-
+            
             let options = {
                 headers: {
                     Authorization: 'Bearer ' + token
